@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Ticket Creado</title>
+    <style>
+        /* Estilos básicos para el correo */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            background-color: #ffffff;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            max-width: 600px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .email-header {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 15px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .email-body {
+            padding: 20px;
+        }
+        .email-body p {
+            margin: 0 0 15px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .email-footer {
+            font-size: 12px;
+            color: #777777;
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #dddddd;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 15px;
+            color: #ffffff;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .email-body h2{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <!-- Encabezado del email -->
+    <div class="email-header">
+        Notificación de Ticket
+    </div>
+
+    <!-- Cuerpo del email -->
+    <div class="email-body">
+        <h2>Hola, <span th:text="${fullName}">[Nombre de Usuario]</span></h2>
+        <p>Se ha creado un nuevo ticket en nuestro sistema con los siguientes detalles:</p>
+
+        <p><strong>ID del Ticket:</strong> <span th:text="${ticketId}">[ID del Ticket]</span></p>
+        <p><strong>Descripción:</strong> <span th:text="${description}">[Descripción del Ticket]</span></p>
+
+        <a href="http://localhost:3000" class="button">Ver Ticket</a>
+    </div>
+
+    <!-- Pie de página -->
+    <div class="email-footer">
+        <p>Gracias por confiar en nuestro servicio de soporte.</p>
+        <p>El equipo de soporte</p>
+        <p>&copy; 2024 Soporte de Ticket. Todos los derechos reservados.</p>
+    </div>
+</div>
+</body>
+</html>
