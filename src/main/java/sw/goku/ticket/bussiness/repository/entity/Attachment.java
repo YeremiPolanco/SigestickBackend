@@ -16,9 +16,9 @@ public class Attachment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long attachmentId;
 
-    @ManyToOne
-    @JoinColumn(name = "ticketId", nullable = false)
-    private Ticket ticket;
+    private String name;
 
-    private String filePath;
+    @ManyToOne
+    @JoinColumn(name = "ticket_id", nullable = false)
+    private Ticket ticket;
 }

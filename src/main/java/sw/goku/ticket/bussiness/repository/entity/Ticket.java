@@ -3,8 +3,10 @@ package sw.goku.ticket.bussiness.repository.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import sw.goku.ticket.security.repository.user.Users;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -36,9 +38,20 @@ public class Ticket {
 
     private String description;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "ticket")
-    @ToString.Exclude
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt; // Fecha de creación (se establece automáticamente)
+
+    private LocalDateTime assignedAt; // Fecha de resolución del ticket
+
+    private LocalDateTime inProgressAt; // Fecha en que el ticket pasa a estado "En Progreso"
+
+    private LocalDateTime resolvedAt; // Fecha de resolución del ticket
+
+    private String subject; // Campo para el asunto del ticket
+
+
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Attachment> attachments;
 
     @JsonIgnore

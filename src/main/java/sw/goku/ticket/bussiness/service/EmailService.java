@@ -18,13 +18,13 @@ public class EmailService {
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
 
-    public void sendTemplateEmail(String to, String subject, Map<String, Object> templateModel) throws MessagingException, MessagingException {
+    public void sendTemplateEmail(String to, String subject, Map<String, Object> templateModel, String template) throws MessagingException, MessagingException {
         // Crear el contexto de Thymeleaf
         Context context = new Context();
         context.setVariables(templateModel);
 
         // Procesar el template
-        String htmlBody = templateEngine.process("template", context);
+        String htmlBody = templateEngine.process(template, context);
 
         // Crear el mensaje MIME
         MimeMessage message = mailSender.createMimeMessage();

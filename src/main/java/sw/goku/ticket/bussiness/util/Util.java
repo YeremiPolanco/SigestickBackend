@@ -2,8 +2,10 @@ package sw.goku.ticket.bussiness.util;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import sw.goku.ticket.bussiness.controller.dto.TechnicalDto;
 import sw.goku.ticket.bussiness.controller.dto.TicketResponse;
 import sw.goku.ticket.bussiness.repository.entity.Ticket;
+import sw.goku.ticket.security.repository.user.Users;
 
 public class Util {
     // Supongamos que tienes un método para crear el ticket en el servicio.
@@ -18,9 +20,36 @@ public class Util {
                 createdTicket.getUser().getUsername(),
                 fullname,
                 createdTicket.getUser().getEmail(),
-                createdTicket.getTechnical()
+                convertOfUserToTechnicalDto(createdTicket.getTechnical()),
+                createdTicket.getSubject(),
+                createdTicket.getCreatedAt(),
+                createdTicket.getAssignedAt(),
+                createdTicket.getInProgressAt(),
+                createdTicket.getResolvedAt()
         );
     }
+
+    public static TechnicalDto convertOfUserToTechnicalDto(Users user) {
+        if (user == null) {
+            return new TechnicalDto(
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            );
+        }
+
+        String fullname = user.getFirstName() + " " + user.getLastName();
+        return new TechnicalDto(
+                user.getId(),
+                user.getUsername(),
+                fullname,
+                user.getEmail(),
+                user.getDni()
+        );
+    }
+
 
     public static String getUsernameFromContext() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

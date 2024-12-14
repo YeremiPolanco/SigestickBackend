@@ -3,7 +3,8 @@ package sw.goku.ticket.bussiness.controller.dto;
 import lombok.*;
 import sw.goku.ticket.bussiness.repository.entity.PriorityLevel;
 import sw.goku.ticket.bussiness.repository.entity.TicketStatus;
-import sw.goku.ticket.security.repository.user.Users;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -25,6 +26,16 @@ public class TicketResponse {
 
     private String email;
 
-    private Users technical;
+    private TechnicalDto technical;
+
+    private String subject;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime assingnedAt;
+
+    private LocalDateTime inProgressAt;
+
+    private LocalDateTime resolvedAt;
 
 }

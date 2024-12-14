@@ -26,7 +26,6 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authProvider;
-    private final CorsConfigurationSource corsConfigurationSource;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -44,14 +43,24 @@ public class SecurityConfig {
                     authConfig.requestMatchers("/error").permitAll();
 
                     // Endpoints protegidos según permisos
+                    authConfig.requestMatchers(HttpMethod.POST, "/auth/register")
+                            .hasAuthority(Permission.CREATE_USERS.name());
                     authConfig.requestMatchers(HttpMethod.POST, "/api/tickets")
                             .hasAuthority(Permission.CREATE_TICKETS.name());
+                    authConfig.requestMatchers(HttpMethod.POST, "/api/tickets/{ticketId}")
+                            .hasAuthority(Permission.ASSIGN_TICKETS.name());
                     authConfig.requestMatchers(HttpMethod.GET, "/api/tickets/all-ticket")
                             .hasAuthority(Permission.READ_ALL_TICKETS.name());
                     authConfig.requestMatchers(HttpMethod.GET, "/api/tickets/all-my-ticket")
                             .hasAuthority(Permission.LIST_YOUR_TICKETS.name());
+                    authConfig.requestMatchers(HttpMethod.GET, "/api/tickets/all-my-technical-ticket")
+                            .hasAuthority(Permission.READ_TICKETS_TECHNICAL.name());
+                    authConfig.requestMatchers(HttpMethod.GET, "/api/tickets/tickets-with-no-technical")
+                            .hasAuthority(Permission.READ_TICKETS_WITHOUT_A_TECHNICAL.name());
                     authConfig.requestMatchers(HttpMethod.GET, "/api/tickets/{ticketId}")
-                            .hasAuthority(Permission.READ_ALL_TICKETS.name());
+                            .hasAuthority(Permission.READ_TICKETS.name());
+                    authConfig.requestMatchers(HttpMethod.GET, "/api/tickets/attachment/{id}")
+                            .hasAuthority(Permission.CREATE_TICKETS.name());
                     authConfig.requestMatchers(HttpMethod.PUT, "/api/tickets/{ticketId}")
                             .hasAuthority(Permission.UPDATE_TICKETS.name());
                     authConfig.requestMatchers(HttpMethod.DELETE, "/api/tickets/{ticketId}")
@@ -60,6 +69,7 @@ public class SecurityConfig {
                             .hasAuthority(Permission.TICKETS_STATUS.name());
                     authConfig.requestMatchers(HttpMethod.GET, "/api/user")
                             .hasAuthority(Permission.GET_ROLE.name());
+
 
                     // Bloquear cualquier otra solicitud no configurada
                     authConfig.anyRequest().denyAll();
